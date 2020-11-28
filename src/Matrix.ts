@@ -445,13 +445,13 @@ export namespace Matrix {
         if (Common.inputCheck) {
             Common.assertSameDimension(n, _size1[1]);
         }
-        const result = output || identity(n);
         if (output && Common.inputCheck) {
             sizeOf(output, _size2);
             Common.assertSameDimension(_size2[0], n);
             Common.assertSameDimension(_size2[1], n);
-            identity(n, result);
+            identity(n, output);
         }
+        const result = output || identity(n);
         const m = clone(source, null);
         const lastIndex = n - 1;
         for (let i = 0; i < n; i++) {
