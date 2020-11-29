@@ -436,6 +436,61 @@ export namespace Matrix {
     };
     /** dts2md break */
     /**
+     * Get the reduced row echelon form of the given matrix
+     * (using Gauss-Jordan elimination)
+     */
+    export const RREF = (source: Matrix, output?: Matrix) => {
+        sizeOf(source, _size1);
+        const m = _size1[0];
+        const n = _size1[1];
+        if (output && Common.inputCheck) {
+            sizeOf(output, _size2);
+            Common.assertSameDimension(_size2[0], m);
+            Common.assertSameDimension(_size2[1], n);
+        }
+        const result = output || clone(source);
+        const lastIndex = m - 1;
+        for (let i = 0; i < n; i++) {
+            if (i >= m) {
+                break;
+            }
+            if (!result[i][i]) { // first element is zero
+                let j, t;
+                for (j = i + 1; j < m; j++) { // find nonzero and swap
+                    if (result[j][i]) {
+                        t = result[j];
+                        result[j] = result[i];
+                        result[i] = t;
+                        break;
+                    }
+                }
+                if (i < lastIndex && j === m) { // all zero
+                    continue;
+                }
+            }
+            if (result[i][i] !== 1) { // normalize
+                const c = result[i][i];
+                result[i][i] = 1;
+                let k;
+                for (k = i + 1; k < n; k++) {
+                    result[i][k] /= c;
+                }
+            }
+            for (let j = 0; j < m; j++) { // transform
+                if (i !== j && result[j][i]) {
+                    const c = result[j][i];
+                    result[j][i] = 0;
+                    let k;
+                    for (k = i + 1; k < n; k++) {
+                        result[j][k] -= result[i][k] * c;
+                    }
+                }
+            }
+        }
+        return result;
+    };
+    /** dts2md break */
+    /**
      * Returns the inverse matrix of the source matrix
      * (returns `null` if the inverse matrix doesn't exist)
      */
