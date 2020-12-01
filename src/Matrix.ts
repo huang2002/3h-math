@@ -450,13 +450,14 @@ export namespace Matrix {
         }
         const result = output || clone(source);
         const lastIndex = m - 1;
+        let k = 0;
         for (let i = 0; i < n; i++) {
             if (i >= m) {
                 break;
             }
-            if (!result[i][i]) { // first element is zero
+            if (!result[k][i]) { // first element is zero
                 let j, t;
-                for (j = i + 1; j < m; j++) { // find nonzero and swap
+                for (j = k + 1; j < m; j++) { // find nonzero and swap
                     if (result[j][i]) {
                         t = result[j];
                         result[j] = result[i];
@@ -468,24 +469,25 @@ export namespace Matrix {
                     continue;
                 }
             }
-            if (result[i][i] !== 1) { // normalize
-                const c = result[i][i];
-                result[i][i] = 1;
-                let k;
-                for (k = i + 1; k < n; k++) {
-                    result[i][k] /= c;
+            if (result[k][i] !== 1) { // normalize
+                const c = result[k][i];
+                result[k][i] = 1;
+                let l;
+                for (l = i + 1; l < n; l++) {
+                    result[k][l] /= c;
                 }
             }
             for (let j = 0; j < m; j++) { // transform
-                if (i !== j && result[j][i]) {
+                if (k !== j && result[j][i]) {
                     const c = result[j][i];
                     result[j][i] = 0;
-                    let k;
-                    for (k = i + 1; k < n; k++) {
-                        result[j][k] -= result[i][k] * c;
+                    let l;
+                    for (l = i + 1; l < n; l++) {
+                        result[j][l] -= result[k][l] * c;
                     }
                 }
             }
+            k++;
         }
         return result;
     };
