@@ -149,6 +149,20 @@ test({
         const m2 = [[8, 1, 6], [3, 5, 7], [4, 9, 2]];
         context.assertStrictEqual(Matrix.RREF(m2, m2), m2);
         context.assertJSONEqual(m2, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
+        context.assertJSONEqual(
+            Matrix.RREF([
+                [1, 1, 0, -3, -1],
+                [1, -1, 2, -1, 0],
+                [4, -2, 6, 3, -4],
+                [2, 4, -2, 4, -7]
+            ]),
+            [
+                [1, 0, 1, 0, -1.1666666666666665],
+                [0, 1, -1, 0, -0.8333333333333333],
+                [0, 0, 0, 1, -0.3333333333333333],
+                [0, 0, 0, 0, 0]
+            ]
+        );
         context.expectThrow(Matrix.RREF, RangeError, [m2, m1]);
     },
 
