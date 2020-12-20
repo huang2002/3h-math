@@ -449,7 +449,7 @@ export namespace Matrix {
             Common.assertSameDimension(_size2[1], n);
         }
         const result = output || clone(source);
-        const lastIndex = m - 1;
+        const lastRowIndex = m - 1;
         let k = 0;
         for (let i = 0; i < n; i++) {
             if (i >= m) {
@@ -458,14 +458,14 @@ export namespace Matrix {
             if (!result[k][i]) { // first element is zero
                 let j, t;
                 for (j = k + 1; j < m; j++) { // find nonzero and swap
-                    if (result[j][i]) {
+                    if (result[j][k]) {
                         t = result[j];
-                        result[j] = result[i];
-                        result[i] = t;
+                        result[j] = result[k];
+                        result[k] = t;
                         break;
                     }
                 }
-                if (i < lastIndex && j === m) { // all zero
+                if (k < lastRowIndex && j === m) { // all zero
                     continue;
                 }
             }
