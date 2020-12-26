@@ -98,17 +98,15 @@ test({
     },
 
     cross(context) {
-        const v3 = [1, 0, 0];
-        const v1 = [0];
+        const v3 = /** @type {import('..').Vector3} */([1, 0, 0]);
         context.expectThrow(Vector.cross, RangeError, [[2, 4], [1, 3, 5]]);
         context.assertStrictEqual(Vector.cross([1, 2], [3, 4]), -2);
-        context.assertStrictEqual(Vector.cross([5, 6], [7, 8], v1), v1);
-        context.assertShallowEqual(v1, [-2]);
-        context.expectThrow(Vector.cross, RangeError, [[2, 4], [6, 8], [0, 0]]);
+        context.assertStrictEqual(Vector.cross([5, 6], [7, 8]), -2);
         context.assertShallowEqual(Vector.cross(v3, [0, 1, 0]), [0, 0, 1]);
         context.assertShallowEqual(v3, [1, 0, 0]);
         context.assertStrictEqual(Vector.cross(v3, [0, 0, 1], v3), v3);
         context.assertShallowEqual(v3, [0, -1, 0]);
+        // @ts-ignore
         context.expectThrow(Vector.cross, RangeError, [[0, 1, 1], [1, 0, 0], [0, 0]]);
     },
 

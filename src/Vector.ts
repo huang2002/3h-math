@@ -230,21 +230,15 @@ export namespace Vector {
     /**
      * Returns the cross product of the given vectors
      */
-    export const cross = (v1: Vector, v2: Vector, output?: Vector) => {
+    export const cross = (v1: Vector, v2: Vector, output?: Vector3) => {
         if (Common.inputCheck) {
             Common.assertSameDimension(v1.length, v2.length);
         }
         if (v1.length === 2) {
-            const result = v1[0] * v2[1] - v1[1] * v2[0];
-            if (output) {
-                if (Common.inputCheck) {
-                    Common.assertSameDimension(output.length, 1);
-                }
-                output[0] = result;
-                return output;
-            } else {
-                return result;
+            if (output && Common.inputCheck) {
+                console.warn('extra output option');
             }
+            return v1[0] * v2[1] - v1[1] * v2[0];
         } else if (v1.length === 3) {
             const x = v1[1] * v2[2] - v1[2] * v2[1];
             const y = v1[2] * v2[0] - v1[0] * v2[2];
