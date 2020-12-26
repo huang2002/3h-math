@@ -119,6 +119,84 @@ export namespace Matrix {
     };
     /** dts2md break */
     /**
+     * Stack the given matrices vertically
+     */
+    export const vstack = (matrices: Matrix[], output?: Matrix) => {
+        if (!matrices.length) {
+            throw new RangeError('no matrices provided');
+        }
+        const m0 = matrices[0];
+        const width = sizeOf(m0, _size1)[1];
+        const heights = [_size1[0]];
+        let height = _size1[0];
+        for (let i = 1; i < matrices.length; i++) {
+            height += matrices[i].length;
+            heights[i] = matrices[i].length;
+            if (Common.inputCheck) {
+                Common.assertSameDimension(
+                    sizeOf(matrices[i], _size2)[1],
+                    width
+                );
+            }
+        }
+        const result = output || init(height, width);
+        if (output && Common.inputCheck) {
+            sizeOf(output, _size3);
+            Common.assertSameDimension(_size3[0], height);
+            Common.assertSameDimension(_size3[1], width);
+        }
+        let rowIndex = 0;
+        for (let k = 0; k < matrices.length; k++) {
+            const m = matrices[k];
+            for (let i = 0; i < heights[k]; i++) {
+                for (let j = 0; j < width; j++) {
+                    result[rowIndex][j] = m[i][j];
+                }
+                rowIndex++;
+            }
+        }
+        return result;
+    };
+    /** dts2md break */
+    /**
+     * Stack the given matrices horizontally
+     */
+    export const hstack = (matrices: Matrix[], output?: Matrix) => {
+        if (!matrices.length) {
+            throw new RangeError('no matrices provided');
+        }
+        const m0 = matrices[0];
+        const height = sizeOf(m0, _size1)[0];
+        const widths = [_size1[1]];
+        let width = _size1[1];
+        for (let i = 1; i < matrices.length; i++) {
+            sizeOf(matrices[i], _size2);
+            width += _size2[1];
+            widths[i] = _size2[1];
+            if (Common.inputCheck) {
+                Common.assertSameDimension(_size2[0], height);
+            }
+        }
+        const result = output || init(height, width);
+        if (output && Common.inputCheck) {
+            sizeOf(output, _size3);
+            Common.assertSameDimension(_size3[0], width);
+            Common.assertSameDimension(_size3[1], height);
+        }
+        let columnIndex = 0;
+        for (let k = 0; k < matrices.length; k++) {
+            const m = matrices[k];
+            for (let j = 0; j < widths[k]; j++) {
+                for (let i = 0; i < height; i++) {
+                    result[i][columnIndex] = m[i][j];
+                }
+                columnIndex++;
+            }
+        }
+        return result;
+    };
+    /** dts2md break */
+    /**
      * Returns the dimensions of the given matrix
      */
     export const sizeOf = (matrix: Matrix, output?: Vector2 | null) => {

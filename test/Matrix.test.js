@@ -46,6 +46,38 @@ test({
         context.expectThrow(Matrix.clone, RangeError, [[[0, 1], [2, 3]], [[0]]]);
     },
 
+    vstack(context) {
+        const m = [[0, 0], [0, 0]];
+        const m1 = [[0, 1]];
+        const m2 = [[2, 3]];
+        const m3 = [[4, 5]];
+        context.assertJSONEqual(Matrix.vstack([m1, m2, m3]), [[0, 1], [2, 3], [4, 5]]);
+        context.assertJSONEqual(m1, [[0, 1]]);
+        context.assertJSONEqual(Matrix.vstack([m1]), m1);
+        context.assertJSONEqual(m1, [[0, 1]]);
+        context.assertStrictEqual(Matrix.vstack([m1, m2], m), m);
+        context.assertJSONEqual(m, [[0, 1], [2, 3]]);
+        context.expectThrow(Matrix.vstack, RangeError, [[]]);
+        context.expectThrow(Matrix.vstack, RangeError, [[m1, [[]]]]);
+        context.expectThrow(Matrix.vstack, RangeError, [[m1, m2], [[0, 1]]]);
+    },
+
+    hstack(context) {
+        const m = [[0, 0], [0, 0]];
+        const m1 = [[0], [3]];
+        const m2 = [[1], [4]];
+        const m3 = [[2], [5]];
+        context.assertJSONEqual(Matrix.hstack([m1, m2, m3]), [[0, 1, 2], [3, 4, 5]]);
+        context.assertJSONEqual(m1, [[0], [3]]);
+        context.assertJSONEqual(Matrix.hstack([m1]), m1);
+        context.assertJSONEqual(m1, [[0], [3]]);
+        context.assertStrictEqual(Matrix.hstack([m1, m2], m), m);
+        context.assertJSONEqual(m, [[0, 1], [3, 4]]);
+        context.expectThrow(Matrix.hstack, RangeError, [[]]);
+        context.expectThrow(Matrix.hstack, RangeError, [[m1, [[]]]]);
+        context.expectThrow(Matrix.hstack, RangeError, [[m1, m2], [[0], [1]]]);
+    },
+
     sizeOf(context) {
         context.assertShallowEqual(Matrix.sizeOf([[0, 1, 2], [3, 4, 5]]), [2, 3]);
         context.assertShallowEqual(Matrix.sizeOf([[0, 1], [2, 3], [4, 5]]), [3, 2]);
