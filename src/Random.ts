@@ -52,7 +52,7 @@ export namespace Random {
         /**
          * Get a random string (consisting of 0-9, a-z and A-Z)
          */
-        string = () => this.next().toString(36).slice(2);
+        string = () => (this.next() / this.m).toString(36).slice(2);
         /** dts2md break */
         /**
          * Get a random element from the given array(`choices`)
