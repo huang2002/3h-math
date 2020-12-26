@@ -1,6 +1,6 @@
 // @ts-check
 const { test, TestContext } = require('3h-test');
-const { Random } = require('..');
+const { Random } = require('../dist/3h-math.umd.js');
 
 const SEED = 20021011;
 const randomizer = new Random.Randomizer(SEED);
