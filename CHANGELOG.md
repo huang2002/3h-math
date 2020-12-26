@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Fix `Random.Randomizer.string`
+
 ## 0.2.0
 
 - Add `Matrix.substraction` & `Vector.substraction`
