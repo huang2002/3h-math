@@ -122,6 +122,20 @@ test({
         context.expectThrow(Matrix.sum, RangeError, [[[[0, 1], [2, 3]], [[0]]]]);
     },
 
+    substraction(context) {
+        const m = [[6, 7, 8], [9, 10, 11]];
+        context.assertJSONEqual(
+            Matrix.substraction([m, [[5, 4, 3], [2, 1, 0]]]),
+            [[1, 3, 5], [7, 9, 11]]
+        );
+        context.assertJSONEqual(m, [[6, 7, 8], [9, 10, 11]]);
+        context.assertStrictEqual(Matrix.substraction([m, [[5, 4, 3], [2, 1, 0]]], m), m);
+        context.assertJSONEqual(m, [[1, 3, 5], [7, 9, 11]]);
+        context.expectThrow(Matrix.substraction, RangeError, [[]]);
+        context.expectThrow(Matrix.substraction, RangeError, [[[[0, 1], [2, 3]]], [[0]]]);
+        context.expectThrow(Matrix.substraction, RangeError, [[[[0, 1], [2, 3]], [[0]]]]);
+    },
+
     transpose(context) {
         context.assertJSONEqual(
             Matrix.transpose([[0, 1], [2, 3], [4, 5]]),

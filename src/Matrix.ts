@@ -343,6 +343,46 @@ export namespace Matrix {
     };
     /** dts2md break */
     /**
+     * Returns the substraction of the given matrices
+     * (element-wise substraction; `result = m0 - m1 - m2 - ...`)
+     */
+    export const substraction = (
+        matrices: Matrix[],
+        output?: Matrix | null,
+    ) => {
+        if (!matrices.length) {
+            throw new RangeError('no matrices provided');
+        }
+        const m0 = matrices[0];
+        sizeOf(m0, _size1);
+        const result = output || init(_size1[0], _size1[1]);
+        if (output && Common.inputCheck) {
+            sizeOf(output, _size2);
+            Common.assertSameDimension(_size2[0], _size1[0]);
+            Common.assertSameDimension(_size2[1], _size1[1]);
+        }
+        for (let i = 0; i < _size1[0]; i++) {
+            for (let j = 0; j < _size1[1]; j++) {
+                result[i][j] = m0[i][j];
+            }
+        }
+        for (let k = 1; k < matrices.length; k++) {
+            const m = matrices[k];
+            if (Common.inputCheck) {
+                sizeOf(m, _size2);
+                Common.assertSameDimension(_size2[0], _size1[0]);
+                Common.assertSameDimension(_size2[1], _size1[1]);
+            }
+            for (let i = 0; i < _size1[0]; i++) {
+                for (let j = 0; j < _size1[1]; j++) {
+                    result[i][j] -= m[i][j];
+                }
+            }
+        }
+        return result;
+    };
+    /** dts2md break */
+    /**
      * Returns the transpose of the source matrix
      */
     export const transpose = (source: Matrix, output?: Matrix | null) => {
