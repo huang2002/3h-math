@@ -1,6 +1,8 @@
 // @ts-check
 const { test } = require('3h-test');
-const { Matrix } = require('../dist/3h-math.umd.js');
+const { Matrix } = /** @type {import('..')} */(
+    /** @type {unknown} */(require('../dist/3h-math.umd.js'))
+);
 
 test({
     verbose: false,
