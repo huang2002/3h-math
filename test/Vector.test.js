@@ -80,6 +80,15 @@ test({
         context.expectThrow(Vector.sum, RangeError, [[]]);
     },
 
+    substraction(context) {
+        const v = [3, 4, 5];
+        context.assertShallowEqual(Vector.substraction([v, [2, 1, 0]]), [1, 3, 5]);
+        context.assertShallowEqual(v, [3, 4, 5]);
+        context.assertStrictEqual(Vector.substraction([v, [1, 3, 5]], v), v);
+        context.assertShallowEqual(v, [2, 1, 0]);
+        context.expectThrow(Vector.substraction, RangeError, [[]]);
+    },
+
     dot(context) {
         context.assertStrictEqual(Vector.dot([1, 2, 3], [4, 5, 6]), 32);
         context.assertStrictEqual(Vector.dot([1, 0, 1], [0, 1, 0]), 0);

@@ -185,6 +185,38 @@ export namespace Vector {
     };
     /** dts2md break */
     /**
+     * Returns the substraction of the given vectors
+     * (`result = v0 - v1 - v2 - ...`)
+     */
+    export const substraction = (vectors: Vector[], output?: Vector | null) => {
+        if (!vectors.length) {
+            throw new RangeError('no vectors provided');
+        }
+        let result = output;
+        const d0 = vectors[0].length;
+        if (Common.inputCheck) {
+            Common.validateDimension(d0);
+        }
+        if (result) {
+            if (Common.inputCheck) {
+                Common.assertSameDimension(d0, result.length);
+            }
+        } else {
+            result = vectors[0].slice();
+        }
+        for (let i = 1; i < vectors.length; i++) {
+            const vector = vectors[i];
+            if (Common.inputCheck) {
+                Common.assertSameDimension(d0, vector.length);
+            }
+            for (let j = 0; j < vector.length; j++) {
+                result[j] -= vector[j];
+            }
+        }
+        return result;
+    };
+    /** dts2md break */
+    /**
      * Returns the dot product of the given vectors
      */
     export const dot = (v1: Vector, v2: Vector) => {
