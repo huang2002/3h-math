@@ -12,8 +12,8 @@ test({
         context.assertShallowEqual(Vector.init(3), [0, 0, 0]);
         context.assertShallowEqual(Vector.init(2, 1), [1, 1]);
         context.assertShallowEqual(Vector.init(3, i => i), [0, 1, 2]);
-        context.expectThrow(Vector.init, RangeError, [-1]);
-        context.expectThrow(Vector.init, RangeError, [0]);
+        context.expectThrow(RangeError, Vector.init, [-1]);
+        context.expectThrow(RangeError, Vector.init, [0]);
     },
 
     clone(context) {
@@ -21,7 +21,7 @@ test({
         const v = [0, 0];
         context.assertShallowEqual(Vector.clone([0, 1], v), v);
         context.assertShallowEqual(v, [0, 1]);
-        context.expectThrow(Vector.clone, RangeError, [[0, 1], [0]]);
+        context.expectThrow(RangeError, Vector.clone, [[0, 1], [0]]);
     },
 
     sizeOf(context) {
@@ -47,7 +47,7 @@ test({
         context.assertShallowEqual(v, [0, 1]);
         context.assertStrictEqual(Vector.map(v, x => -x, v), v);
         context.assertShallowEqual(v, [-0, -1]);
-        context.expectThrow(Vector.map, RangeError, [v, x => x * 2, [0]]);
+        context.expectThrow(RangeError, Vector.map, [v, x => x * 2, [0]]);
     },
 
     multiply(context) {
@@ -56,7 +56,7 @@ test({
         context.assertShallowEqual(v, [1, 2]);
         context.assertStrictEqual(Vector.multiply(v, 3, v), v);
         context.assertShallowEqual(v, [3, 6]);
-        context.expectThrow(Vector.multiply, RangeError, [v, 6, [0]]);
+        context.expectThrow(RangeError, Vector.multiply, [v, 6, [0]]);
     },
 
     plus(context) {
@@ -65,7 +65,7 @@ test({
         context.assertShallowEqual(v, [0, 1]);
         context.assertStrictEqual(Vector.plus(v, 2, v), v);
         context.assertShallowEqual(v, [2, 3]);
-        context.expectThrow(Vector.plus, RangeError, [v, 5, [0]]);
+        context.expectThrow(RangeError, Vector.plus, [v, 5, [0]]);
     },
 
     norm(context) {
@@ -79,7 +79,7 @@ test({
         context.assertShallowEqual(v, [0, 1, 2]);
         context.assertStrictEqual(Vector.sum([v, [6, 7, 8]], v), v);
         context.assertShallowEqual(v, [6, 8, 10]);
-        context.expectThrow(Vector.sum, RangeError, [[]]);
+        context.expectThrow(RangeError, Vector.sum, [[]]);
     },
 
     substraction(context) {
@@ -88,18 +88,18 @@ test({
         context.assertShallowEqual(v, [3, 4, 5]);
         context.assertStrictEqual(Vector.substraction([v, [1, 3, 5]], v), v);
         context.assertShallowEqual(v, [2, 1, 0]);
-        context.expectThrow(Vector.substraction, RangeError, [[]]);
+        context.expectThrow(RangeError, Vector.substraction, [[]]);
     },
 
     dot(context) {
         context.assertStrictEqual(Vector.dot([1, 2, 3], [4, 5, 6]), 32);
         context.assertStrictEqual(Vector.dot([1, 0, 1], [0, 1, 0]), 0);
-        context.expectThrow(Vector.dot, RangeError, [[], [0, 1]]);
+        context.expectThrow(RangeError, Vector.dot, [[], [0, 1]]);
     },
 
     cross(context) {
         const v3 = /** @type {import('..').Vector3} */([1, 0, 0]);
-        context.expectThrow(Vector.cross, RangeError, [[2, 4], [1, 3, 5]]);
+        context.expectThrow(RangeError, Vector.cross, [[2, 4], [1, 3, 5]]);
         context.assertStrictEqual(Vector.cross([1, 2], [3, 4]), -2);
         context.assertStrictEqual(Vector.cross([5, 6], [7, 8]), -2);
         context.assertShallowEqual(Vector.cross(v3, [0, 1, 0]), [0, 0, 1]);
@@ -107,7 +107,7 @@ test({
         context.assertStrictEqual(Vector.cross(v3, [0, 0, 1], v3), v3);
         context.assertShallowEqual(v3, [0, -1, 0]);
         // @ts-ignore
-        context.expectThrow(Vector.cross, RangeError, [[0, 1, 1], [1, 0, 0], [0, 0]]);
+        context.expectThrow(RangeError, Vector.cross, [[0, 1, 1], [1, 0, 0], [0, 0]]);
     },
 
 });

@@ -9,15 +9,15 @@ test({
 }, {
 
     init(context) {
-        context.assertJSONEqual(Matrix.init(2, 2), [[0, 0], [0, 0]]);
-        context.assertJSONEqual(Matrix.init(2, 2, 1), [[1, 1], [1, 1]]);
-        context.assertJSONEqual(
+        context.assertDeepEqual(Matrix.init(2, 2), [[0, 0], [0, 0]]);
+        context.assertDeepEqual(Matrix.init(2, 2, 1), [[1, 1], [1, 1]]);
+        context.assertDeepEqual(
             Matrix.init(2, 2, (i, j) => i * 10 + j),
             [[0, 1], [10, 11]]
         );
-        context.expectThrow(Matrix.init, RangeError, [1, -1]);
-        context.expectThrow(Matrix.init, RangeError, [-1, 1]);
-        context.expectThrow(Matrix.init, RangeError, [1, 0]);
+        context.expectThrow(RangeError, Matrix.init, [1, -1]);
+        context.expectThrow(RangeError, Matrix.init, [-1, 1]);
+        context.expectThrow(RangeError, Matrix.init, [1, 0]);
     },
 
     identity(context) {
@@ -32,20 +32,20 @@ test({
         );
         const m2 = [[0, 1], [2, 3]];
         context.assertStrictEqual(Matrix.identity(2, m2), m2);
-        context.assertJSONEqual(m2, [[1, 0], [0, 1]]);
-        context.expectThrow(Matrix.identity, RangeError, [0]);
-        context.expectThrow(Matrix.identity, RangeError, [-1]);
-        context.expectThrow(Matrix.identity, RangeError, [2, [[0]]]);
-        context.expectThrow(Matrix.identity, RangeError, [2, [[0], [0]]]);
-        context.expectThrow(Matrix.identity, RangeError, [2, [[0, 0]]]);
+        context.assertDeepEqual(m2, [[1, 0], [0, 1]]);
+        context.expectThrow(RangeError, Matrix.identity, [0]);
+        context.expectThrow(RangeError, Matrix.identity, [-1]);
+        context.expectThrow(RangeError, Matrix.identity, [2, [[0]]]);
+        context.expectThrow(RangeError, Matrix.identity, [2, [[0], [0]]]);
+        context.expectThrow(RangeError, Matrix.identity, [2, [[0, 0]]]);
     },
 
     clone(context) {
-        context.assertJSONEqual(Matrix.clone([[0, 1], [2, 3]]), [[0, 1], [2, 3]]);
+        context.assertDeepEqual(Matrix.clone([[0, 1], [2, 3]]), [[0, 1], [2, 3]]);
         const m = [[0, 0], [0, 0]];
         context.assertStrictEqual(Matrix.clone([[0, 1], [2, 3]], m), m);
-        context.assertJSONEqual(m, [[0, 1], [2, 3]]);
-        context.expectThrow(Matrix.clone, RangeError, [[[0, 1], [2, 3]], [[0]]]);
+        context.assertDeepEqual(m, [[0, 1], [2, 3]]);
+        context.expectThrow(RangeError, Matrix.clone, [[[0, 1], [2, 3]], [[0]]]);
     },
 
     vstack(context) {
@@ -53,15 +53,15 @@ test({
         const m1 = [[0, 1]];
         const m2 = [[2, 3]];
         const m3 = [[4, 5]];
-        context.assertJSONEqual(Matrix.vstack([m1, m2, m3]), [[0, 1], [2, 3], [4, 5]]);
-        context.assertJSONEqual(m1, [[0, 1]]);
-        context.assertJSONEqual(Matrix.vstack([m1]), m1);
-        context.assertJSONEqual(m1, [[0, 1]]);
+        context.assertDeepEqual(Matrix.vstack([m1, m2, m3]), [[0, 1], [2, 3], [4, 5]]);
+        context.assertDeepEqual(m1, [[0, 1]]);
+        context.assertDeepEqual(Matrix.vstack([m1]), m1);
+        context.assertDeepEqual(m1, [[0, 1]]);
         context.assertStrictEqual(Matrix.vstack([m1, m2], m), m);
-        context.assertJSONEqual(m, [[0, 1], [2, 3]]);
-        context.expectThrow(Matrix.vstack, RangeError, [[]]);
-        context.expectThrow(Matrix.vstack, RangeError, [[m1, [[]]]]);
-        context.expectThrow(Matrix.vstack, RangeError, [[m1, m2], [[0, 1]]]);
+        context.assertDeepEqual(m, [[0, 1], [2, 3]]);
+        context.expectThrow(RangeError, Matrix.vstack, [[]]);
+        context.expectThrow(RangeError, Matrix.vstack, [[m1, [[]]]]);
+        context.expectThrow(RangeError, Matrix.vstack, [[m1, m2], [[0, 1]]]);
     },
 
     hstack(context) {
@@ -69,15 +69,15 @@ test({
         const m1 = [[0], [3]];
         const m2 = [[1], [4]];
         const m3 = [[2], [5]];
-        context.assertJSONEqual(Matrix.hstack([m1, m2, m3]), [[0, 1, 2], [3, 4, 5]]);
-        context.assertJSONEqual(m1, [[0], [3]]);
-        context.assertJSONEqual(Matrix.hstack([m1]), m1);
-        context.assertJSONEqual(m1, [[0], [3]]);
+        context.assertDeepEqual(Matrix.hstack([m1, m2, m3]), [[0, 1, 2], [3, 4, 5]]);
+        context.assertDeepEqual(m1, [[0], [3]]);
+        context.assertDeepEqual(Matrix.hstack([m1]), m1);
+        context.assertDeepEqual(m1, [[0], [3]]);
         context.assertStrictEqual(Matrix.hstack([m1, m2], m), m);
-        context.assertJSONEqual(m, [[0, 1], [3, 4]]);
-        context.expectThrow(Matrix.hstack, RangeError, [[]]);
-        context.expectThrow(Matrix.hstack, RangeError, [[m1, [[]]]]);
-        context.expectThrow(Matrix.hstack, RangeError, [[m1, m2], [[0], [1]]]);
+        context.assertDeepEqual(m, [[0, 1], [3, 4]]);
+        context.expectThrow(RangeError, Matrix.hstack, [[]]);
+        context.expectThrow(RangeError, Matrix.hstack, [[m1, [[]]]]);
+        context.expectThrow(RangeError, Matrix.hstack, [[m1, m2], [[0], [1]]]);
     },
 
     sizeOf(context) {
@@ -104,79 +104,79 @@ test({
 
     map(context) {
         const m = [[0, 1], [2, 3]];
-        context.assertJSONEqual(Matrix.map(m, x => x * 2), [[0, 2], [4, 6]]);
-        context.assertJSONEqual(m, [[0, 1], [2, 3]]);
+        context.assertDeepEqual(Matrix.map(m, x => x * 2), [[0, 2], [4, 6]]);
+        context.assertDeepEqual(m, [[0, 1], [2, 3]]);
         context.assertStrictEqual(Matrix.map(m, x => -x, m), m);
-        context.assertJSONEqual(m, [[-0, -1], [-2, -3]]);
-        context.expectThrow(Matrix.map, RangeError, [m, x => x, [[0]]]);
+        context.assertDeepEqual(m, [[-0, -1], [-2, -3]]);
+        context.expectThrow(RangeError, Matrix.map, [m, x => x, [[0]]]);
     },
 
     multiply(context) {
         const m = [[0, 1], [2, 3]];
-        context.assertJSONEqual(Matrix.multiply(m, 0), [[0, 0], [0, 0]]);
-        context.assertJSONEqual(m, [[0, 1], [2, 3]]);
+        context.assertDeepEqual(Matrix.multiply(m, 0), [[0, 0], [0, 0]]);
+        context.assertDeepEqual(m, [[0, 1], [2, 3]]);
         context.assertStrictEqual(Matrix.multiply(m, 2, m), m);
-        context.assertJSONEqual(m, [[0, 2], [4, 6]]);
-        context.expectThrow(Matrix.multiply, RangeError, [m, 6, [[0]]]);
+        context.assertDeepEqual(m, [[0, 2], [4, 6]]);
+        context.expectThrow(RangeError, Matrix.multiply, [m, 6, [[0]]]);
     },
 
     plus(context) {
         const m = [[0, 1], [2, 3]];
-        context.assertJSONEqual(Matrix.plus(m, 1), [[1, 2], [3, 4]]);
-        context.assertJSONEqual(m, [[0, 1], [2, 3]]);
+        context.assertDeepEqual(Matrix.plus(m, 1), [[1, 2], [3, 4]]);
+        context.assertDeepEqual(m, [[0, 1], [2, 3]]);
         context.assertStrictEqual(Matrix.plus(m, 2, m), m);
-        context.assertJSONEqual(m, [[2, 3], [4, 5]]);
-        context.expectThrow(Matrix.plus, RangeError, [m, 5, [[0]]]);
+        context.assertDeepEqual(m, [[2, 3], [4, 5]]);
+        context.expectThrow(RangeError, Matrix.plus, [m, 5, [[0]]]);
     },
 
     matmul(context) {
         const m1 = [[0, 1, 2], [3, 4, 5]];
         const m2 = [[0, 0], [0, 0]];
-        context.assertJSONEqual(
+        context.assertDeepEqual(
             Matrix.matmul(m1, [[0, 1], [2, 3], [4, 5]]),
             [[10, 13], [28, 40]]
         );
-        context.assertJSONEqual(m1, [[0, 1, 2], [3, 4, 5]]);
+        context.assertDeepEqual(m1, [[0, 1, 2], [3, 4, 5]]);
         context.assertStrictEqual(Matrix.matmul(m1, [[6, 7], [8, 9], [10, 11]], m2), m2);
-        context.assertJSONEqual(m2, [[28, 31], [100, 112]]);
-        context.expectThrow(Matrix.matmul, RangeError, [m1, [[0, 0], [0, 0], [0, 0]], [[0]]]);
+        context.assertDeepEqual(m2, [[28, 31], [100, 112]]);
+        context.expectThrow(RangeError, Matrix.matmul, [m1, [[0, 0], [0, 0], [0, 0]], [[0]]]);
     },
 
     sum(context) {
         const m = [[0, 1, 2], [3, 4, 5]];
-        context.assertJSONEqual(
+        context.assertDeepEqual(
             Matrix.sum([m, [[6, 7, 8], [9, 10, 11]]]),
             [[6, 8, 10], [12, 14, 16]]
         );
-        context.assertJSONEqual(m, [[0, 1, 2], [3, 4, 5]]);
+        context.assertDeepEqual(m, [[0, 1, 2], [3, 4, 5]]);
         context.assertStrictEqual(Matrix.sum([m, [[6, 7, 8], [9, 10, 11]]], m), m);
-        context.assertJSONEqual(m, [[6, 8, 10], [12, 14, 16]]);
-        context.expectThrow(Matrix.sum, RangeError, [[]]);
-        context.expectThrow(Matrix.sum, RangeError, [[[[0, 1], [2, 3]]], [[0]]]);
-        context.expectThrow(Matrix.sum, RangeError, [[[[0, 1], [2, 3]], [[0]]]]);
+        context.assertDeepEqual(m, [[6, 8, 10], [12, 14, 16]]);
+        context.expectThrow(RangeError, Matrix.sum, [[]]);
+        context.expectThrow(RangeError, Matrix.sum, [[[[0, 1], [2, 3]]], [[0]]]);
+        context.expectThrow(RangeError, Matrix.sum, [[[[0, 1], [2, 3]], [[0]]]]);
     },
 
     substraction(context) {
         const m = [[6, 7, 8], [9, 10, 11]];
-        context.assertJSONEqual(
+        context.assertDeepEqual(
             Matrix.substraction([m, [[5, 4, 3], [2, 1, 0]]]),
             [[1, 3, 5], [7, 9, 11]]
         );
-        context.assertJSONEqual(m, [[6, 7, 8], [9, 10, 11]]);
+        context.assertDeepEqual(m, [[6, 7, 8], [9, 10, 11]]);
         context.assertStrictEqual(Matrix.substraction([m, [[5, 4, 3], [2, 1, 0]]], m), m);
-        context.assertJSONEqual(m, [[1, 3, 5], [7, 9, 11]]);
-        context.expectThrow(Matrix.substraction, RangeError, [[]]);
-        context.expectThrow(Matrix.substraction, RangeError, [[[[0, 1], [2, 3]]], [[0]]]);
-        context.expectThrow(Matrix.substraction, RangeError, [[[[0, 1], [2, 3]], [[0]]]]);
+        context.assertDeepEqual(m, [[1, 3, 5], [7, 9, 11]]);
+        context.expectThrow(RangeError, Matrix.substraction, [[]]);
+        context.expectThrow(RangeError, Matrix.substraction, [[[[0, 1], [2, 3]]], [[0]]]);
+        context.expectThrow(RangeError, Matrix.substraction, [[[[0, 1], [2, 3]], [[0]]]]);
     },
 
     transpose(context) {
-        context.assertJSONEqual(
+        context.assertDeepEqual(
             Matrix.transpose([[0, 1], [2, 3], [4, 5]]),
             [[0, 2, 4], [1, 3, 5]]
         );
-        context.assertJSONEqual(Matrix.transpose([[0]]), [[0]]);
-        context.expectThrow(Matrix.transpose, RangeError, [[[0, 1], [2, 3]], [[0]]]);
+        context.assertDeepEqual(Matrix.transpose([[0]]), [[0]]);
+        context.expectThrow(RangeError, Matrix.transpose, [[[0, 1], [2, 3]], [[0]]]);
     },
 
     det(context) {
@@ -187,17 +187,17 @@ test({
             Matrix.det([[1, 2, 3, 4], [2, 3, 4, 1], [3, 4, 1, 2], [4, 1, 2, 3]]),
             160
         );
-        context.expectThrow(Matrix.det, RangeError, [[[0, 1, 2], [3, 4, 5]]]);
+        context.expectThrow(RangeError, Matrix.det, [[[0, 1, 2], [3, 4, 5]]]);
     },
 
     RREF(context) {
         const m1 = [[1, 2, 3], [4, 5, 6]];
-        context.assertJSONEqual(Matrix.RREF(m1), [[1, 0, -1], [0, 1, 2]]);
-        context.assertJSONEqual(m1, [[1, 2, 3], [4, 5, 6]]);
+        context.assertDeepEqual(Matrix.RREF(m1), [[1, 0, -1], [0, 1, 2]]);
+        context.assertDeepEqual(m1, [[1, 2, 3], [4, 5, 6]]);
         const m2 = [[8, 1, 6], [3, 5, 7], [4, 9, 2]];
         context.assertStrictEqual(Matrix.RREF(m2, m2), m2);
-        context.assertJSONEqual(m2, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
-        context.assertJSONEqual(
+        context.assertDeepEqual(m2, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
+        context.assertDeepEqual(
             Matrix.RREF([
                 [1, 1, 0, -3, -1],
                 [1, -1, 2, -1, 0],
@@ -211,18 +211,18 @@ test({
                 [0, 0, 0, 0, 0]
             ]
         );
-        context.expectThrow(Matrix.RREF, RangeError, [m2, m1]);
+        context.expectThrow(RangeError, Matrix.RREF, [m2, m1]);
     },
 
     inv(context) {
-        context.assertJSONEqual(Matrix.inv([[1, 2], [3, 4]]), [[-2, 1], [1.5, -.5]]);
+        context.assertDeepEqual(Matrix.inv([[1, 2], [3, 4]]), [[-2, 1], [1.5, -.5]]);
         const m1 = [[1, 2, 4], [2, 4, 9], [6, 4, 3]];
         const expected = [[-3, 1.25, 0.25], [6, -2.625, -0.125], [-2, 1, 0]];
-        context.assertJSONEqual(Matrix.inv(m1), expected);
-        context.assertJSONEqual(m1, [[1, 2, 4], [2, 4, 9], [6, 4, 3]]);
+        context.assertDeepEqual(Matrix.inv(m1), expected);
+        context.assertDeepEqual(m1, [[1, 2, 4], [2, 4, 9], [6, 4, 3]]);
         const m2 = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
         context.assertStrictEqual(Matrix.inv(m1, m2), m2);
-        context.assertJSONEqual(m2, expected);
+        context.assertDeepEqual(m2, expected);
     },
 
     diagonal(context) {
