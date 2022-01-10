@@ -1,65 +1,88 @@
+/**
+ * Randomization-related APIs.
+ */
 export namespace Random {
     /** dts2md break */
+    /**
+     * Class of randomizers.
+     */
     export class Randomizer {
         /** dts2md break */
         /**
-         * @param seed randomization seed (default: `Date.now()`)
+         * Constructor of {@link Randomizer}.
+         * (Default seed: `Date.now()`)
          */
         constructor(seed = Date.now()) {
             this.x = seed;
         }
         /** dts2md break */
         /**
-         * Randomization parameters
+         * Randomization parameter `m`.
          */
         m = 1 << 20;
+        /** dts2md break */
+        /**
+         * Randomization parameter `p`.
+         */
         p = 9;
+        /** dts2md break */
+        /**
+         * Randomization parameter `q`.
+         */
         q = 7;
         /** dts2md break */
         /**
-         * Current random value
+         * Current value.
          */
         x: number;
         /** dts2md break */
         /**
-         * Get next random value and save it in `this.x`
+         * Get next random value and save it in `this.x`.
          * (This is usually used internally and the utility
-         * methods declared below may be more useful)
+         * methods declared below may be more useful.)
          */
-        next = () => {
+        next(): number {
             return this.x = (this.x * this.p + this.q) % this.m;
         };
         /** dts2md break */
         /**
-         * Get a random float number in [min, max)
+         * Get a random float number in range [min, max).
          */
-        float = (min: number, max: number) => (
-            min + this.next() / this.m * (max - min)
-        );
+        float(min: number, max: number): number {
+            return min + this.next() / this.m * (max - min);
+        }
         /** dts2md break */
         /**
-         * Get a random integer in [min, max)
+         * Get a random integer in range [min, max).
          */
-        integer = (min: number, max: number) => (
-            Math.floor(this.float(min, max))
-        );
+        integer(min: number, max: number): number {
+            return Math.floor(this.float(min, max));
+        }
         /** dts2md break */
         /**
-         * Get a random boolean value
+         * Get a random boolean value.
          */
-        boolean = () => (this.next() / this.m < .5);
+        boolean(): boolean {
+            return (this.next() / this.m) < .5;
+        }
         /** dts2md break */
         /**
-         * Get a random string (consisting of 0-9, a-z and A-Z)
+         * Get a random string. (consisting of 0-9, a-z and A-Z)
          */
-        string = () => (this.next() / this.m).toString(36).slice(2);
+        string(): string {
+            return (this.next() / this.m)
+                .toString(36)
+                .slice(2);
+        }
         /** dts2md break */
         /**
-         * Get a random element from the given array(`choices`)
+         * Get a random element from the given array.
          */
-        choice = <T>(choices: T[]) => (
-            choices[Math.floor(this.next() / this.m * choices.length)]
-        );
+        choice<T>(choices: T[]): T {
+            return choices[
+                Math.floor(this.next() / this.m * choices.length)
+            ];
+        }
 
     }
 
