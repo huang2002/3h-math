@@ -1,3 +1,3 @@
 [submodule "docs"]
 	path = docs
-	url = git://github.com/huang2002/3h-math.wiki.git
+	url = git@github.com:huang2002/3h-math.wiki.git
