@@ -23,7 +23,9 @@ export namespace Common {
     export const createArray = <T>(
         length: number,
         initializer: ArrayInitializer<T>,
-    ) => Array.from({ length }, initializer);
+    ): T[] => (
+        Array.from({ length }, initializer)
+    );
     /** dts2md break */
     /**
      * Assert that the given two dimensions are equal.
