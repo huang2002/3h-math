@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+- Improve internal code
+- Improve docs
+
 ## 0.2.1
 
 - Fix `Random.Randomizer.string`
